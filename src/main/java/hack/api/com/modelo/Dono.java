@@ -40,8 +40,8 @@ public class Dono implements Serializable{
 	
 	private Integer idade ;
 	
-	@OneToMany(mappedBy = "dono", fetch = FetchType.EAGER ,cascade = CascadeType.MERGE ,orphanRemoval = true)
-	private Set<Animal> animal = new HashSet<>();
+	//@OneToMany(mappedBy = "dono", fetch = FetchType.EAGER ,cascade = CascadeType.MERGE ,orphanRemoval = true)
+	//private Set<Animal> animal = new HashSet<>();
 	
 
 }

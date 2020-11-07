@@ -29,7 +29,9 @@ public class ActData {
 	DonoService repDono;
 
 	@Autowired
-	VacinaService repVacina;
+	VacinaService repVacina;	
+	
+	
 
 	@PostConstruct
 	public List<AnimalDTO> adicionaAnimais() {
