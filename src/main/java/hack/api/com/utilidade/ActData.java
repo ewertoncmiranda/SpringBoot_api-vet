@@ -19,7 +19,7 @@ import hack.api.com.servico.AnimalService;
 import hack.api.com.servico.DonoService;
 import hack.api.com.servico.VacinaService;
 
-@Component
+
 public class ActData {
 
 	@Autowired
@@ -30,10 +30,11 @@ public class ActData {
 
 	@Autowired
 	VacinaService repVacina;	
-	
+		
+
+
 	
 
-	@PostConstruct
 	public List<AnimalDTO> adicionaAnimais() {
 		List<Animal> list = new ArrayList<>();
 
@@ -52,7 +53,7 @@ public class ActData {
 		return listaDto;
 	}
 
-	@PostConstruct
+	
 	public List<DonoDTO> adicionarDonos() {
 		List<Dono> lista = new ArrayList<>();
 
@@ -61,7 +62,7 @@ public class ActData {
 		for (int x = 0; x < 20; x++) {
 			dono = new Dono();
 			dono.setCPF("00" + x * 2 + ".0" + x * 3 + 1 + "0.00" + x++ * 5 + 1 + ".00");
-			dono.setIdade(18 + x);
+			dono.setIdade(1+x);
 			dono.setNome("User" + x + " ");
 			lista.add(dono);
 		}
@@ -69,7 +70,7 @@ public class ActData {
 
 	}
 
-	@PostConstruct
+	
 	public List<VacinaDTO> adicionarVacinas() {
 		List<Vacina> lista = new ArrayList<>();
 

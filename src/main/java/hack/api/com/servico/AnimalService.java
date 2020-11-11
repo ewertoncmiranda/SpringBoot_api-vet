@@ -40,7 +40,7 @@ public class AnimalService implements MeuCrud<AnimalDTO, Animal> {
 	@Override
 	public AnimalDTO edit(Animal animal) {
 		Animal s = null ;
-		if(repo.existsById(animal.getId())) {
+		if(repo.existsById(animal.getAnimal_id())) {
 		 s = repo.save(animal);  
 	  }		
 		return new AnimalDTO(s);
@@ -57,7 +57,7 @@ public class AnimalService implements MeuCrud<AnimalDTO, Animal> {
 
 	@Override
 	public AnimalDTO findById(Long id) {
-		return new AnimalDTO(repo.findById(id).get());
+	return new AnimalDTO(repo.findById(id).get());
 	}
 
 	@Override

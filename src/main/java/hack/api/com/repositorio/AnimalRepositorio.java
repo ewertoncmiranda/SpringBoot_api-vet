@@ -16,10 +16,8 @@ public interface AnimalRepositorio extends JpaRepository<Animal,Long>{
 
 	
 	  @Query("SELECT animal FROM Animal animal WHERE animal.nome like %?1%")
-	  List<Animal> findAllByName(String param);
+	  List<Animal>  findAllByName(String param);
 	 
-	/*
-	 * @Query("SELECT animal FROM Animal animal JOIN FETCH animal.listaDeVacinas") 
-	 * Query SemanaDevSuperior 
-	 */
+		
+	 
 }

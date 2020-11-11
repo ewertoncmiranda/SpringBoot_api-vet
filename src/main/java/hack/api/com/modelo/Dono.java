@@ -1,10 +1,10 @@
 package hack.api.com.modelo;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -32,16 +32,17 @@ public class Dono implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id ;
+	@Column(name="dono_id")
+	private Long dono_id ;
 	
 	private String nome ;
-	
+	private int idade ;
 	private String CPF ;
+		
 	
-	private Integer idade ;
-	
-	//@OneToMany(mappedBy = "dono", fetch = FetchType.EAGER ,cascade = CascadeType.MERGE ,orphanRemoval = true)
-	//private Set<Animal> animal = new HashSet<>();
-	
+	@OneToMany(mappedBy = "dono" ,orphanRemoval = true ,cascade = CascadeType.ALL )
+	private List<Animal> listaDeAnimais = new ArrayList<>();
+
+
 
 }

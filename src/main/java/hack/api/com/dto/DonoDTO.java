@@ -1,5 +1,9 @@
 package hack.api.com.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import hack.api.com.modelo.Animal;
 import hack.api.com.modelo.Dono;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -18,11 +22,13 @@ public class DonoDTO {
 	private String nome;
 	private String CPF;
 	private Integer idade;
+	private List<Animal> listaDeAnimal ;
 
 	public DonoDTO(Dono d) {
-		this.id = d.getId();
+		this.id = d.getDono_id();				
 		this.nome = d.getNome();
 		this.CPF = d.getCPF();
+		this.listaDeAnimal = d.getListaDeAnimais();
 
 	}
 
