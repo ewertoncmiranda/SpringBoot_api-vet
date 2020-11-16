@@ -1,8 +1,8 @@
 API desenvolvida de gerenciamento de clinica veterinária.
-Contém **3 entidades ** persistidas por Spring Data JPA:
--Dono
--Animal
--Vacina
+Contém **3 entidades** persistidas por Spring Data JPA:
+- Dono
+- Animal
+- Vacina
 
 Tecnologias abordadas
 - Java
