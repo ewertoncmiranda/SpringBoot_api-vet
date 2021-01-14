@@ -3,21 +3,23 @@ package hack.api.com.servico;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.stream.Collectors;
+
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import hack.api.com.dto.AnimalDTO;
 import hack.api.com.dto.DonoDTO;
 import hack.api.com.modelo.Animal;
 import hack.api.com.modelo.Dono;
-import hack.api.com.modelo.interfaces.MeuCrud;
 import hack.api.com.repositorio.AnimalRepositorio;
 import hack.api.com.repositorio.DonoRepositorio;
 
 @Service
 @Transactional
-public class DonoService implements MeuCrud<DonoDTO, Dono> {
+public class DonoService  {
 	
 	@Autowired
 	DonoRepositorio repo ;
@@ -25,76 +27,56 @@ public class DonoService implements MeuCrud<DonoDTO, Dono> {
 	@Autowired
 	AnimalRepositorio repoAnimal ;
 	
+	ModelMapper map = new ModelMapper();
+	
 	@Transactional(readOnly = true)
 	public List<DonoDTO> findAll(){
-		List<Dono> lista = repo.findAll();
-	
-		
-		return lista.stream().map(dono -> new DonoDTO(dono)).collect(Collectors.toList());		
-	}
-	
-	@Transactional
-	public List<DonoDTO>saveAll(List<Dono> lista){
-		Iterable<Dono> it = lista ;
-		List <Dono> dto = repo.saveAll(it);
-		return dto.stream().map(dono -> new DonoDTO()).collect(Collectors.toList());
-	}
-	
-	@Transactional
-	public DonoDTO save(Dono dono){
-	 DonoDTO d1 = new DonoDTO(repo.save(dono));
-	 return d1;		
-	}
-
-	@Override
-	public DonoDTO edit(Dono dono) {
-	  Dono d = null ;
-	  if(repo.existsById(dono.getDono_id())) {
-		  d = repo.save(dono);
-	  }
-	  return new DonoDTO(d);
-		
-	}
-
-	@Override
-	public void delete(Long id) {
-		if (repo.existsById(id)) {
-			repo.delete(repo.findById(id).get());
-		} else {
-			System.out.println("---------DONO NÃO EXISTE---------");
+	List<DonoDTO> lista = new ArrayList<>();
+	    for (Dono dono : repo.findAll()) {
+		 lista.add(map.map(dono, DonoDTO.class));		
 		}
-	}
-
-	@Override
+	 return lista ;				
+	}	
+	
+	@Transactional
 	public DonoDTO findById(Long id) {
-   	return new DonoDTO(repo.findById(id).get()); 
+	return map.map(repo.findById(id).get(), DonoDTO.class);	
+	}
+	
+	
+	public DonoDTO save(DonoDTO dono){
+	  return map.map(repo.save(map.map(dono, Dono.class)) ,DonoDTO.class);
 	}
 
-	/*
-	 * @Override public List<DonoDTO> findAllByName(String pedaco) { List<Dono> dto
-	 * = repo.findAllByName(pedaco); return dto.stream().map(dono -> new
-	 * DonoDTO(dono)).collect(Collectors.toList()); }
-	 */
-	@Transactional
-	public DonoDTO adicionarAnimal(Long idDono ,Animal animal) {
-	
-		Dono dono = repo.findById(idDono).get();
+	public DonoDTO edit(DonoDTO dto) {
+		 DonoDTO retorno = new DonoDTO();
+			
+		    if (repo.findById(dto.getId()).isPresent()){
+		     return	retorno = map.map(repo.save(map.map(dto, Dono.class)) , DonoDTO.class);			
+			}
+			 return null ;
+		} 
+
+	public void saveWithAnimals(DonoDTO dto){
 		
-		dono.getListaDeAnimais().add(animal);
+		List<Animal> listaAnimais = new ArrayList<>();
 		
-		//Amarração forçada entre Dono e 	
-		for(int pos = 0 ; pos<dono.getListaDeAnimais().size() ;pos++) {
-		 dono.getListaDeAnimais().get(pos).setDono(dono);	
+		if(!dto.getAnimais().isEmpty()) {
+			
+			dto.getAnimais().forEach(animal ->{
+				
+				if(this.repo.findById(animal).isPresent()) {
+					listaAnimais.add(this.repoAnimal.findById(animal).get());
+				}
+			});			
 		}
-							
-	    return new DonoDTO(repo.save(dono)) ;	
+		Dono dono = new Dono();
+		dono.setCPF(dto.getCPF());
+		dono.setIdade(dto.getIdade());
+		dono.setNome(dto.getNome());
+		dono.setAnimais(listaAnimais);
+		
+		this.repo.save(dono);		
+		
 	}
-
-	@Override
-	public List<DonoDTO> findAllByName(String nome) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
 }

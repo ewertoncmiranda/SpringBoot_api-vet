@@ -1,9 +1,13 @@
 package hack.api.com.dto;
 
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import hack.api.com.modelo.Animal;
+import org.modelmapper.ModelMapper;
+
 import hack.api.com.modelo.Dono;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -16,20 +20,19 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class DonoDTO {
+public class DonoDTO implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Long id;
 	private String nome;
 	private String CPF;
-	private Integer idade;
-	private List<Animal> listaDeAnimal ;
+	private Integer idade ;
+	private List<Long> animais ;    
+	 
 
-	public DonoDTO(Dono d) {
-		this.id = d.getDono_id();				
-		this.nome = d.getNome();
-		this.CPF = d.getCPF();
-		this.listaDeAnimal = d.getListaDeAnimais();
-
-	}
-
+	
 }

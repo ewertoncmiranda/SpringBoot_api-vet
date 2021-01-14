@@ -1,0 +1,9 @@
+
+`
+java:S36554"7Call "Optional#isPresent()" before accessing the value.(›ÏÂØùÿÿÿÿH-RMAJORZBUG
+v
+java:S4684-"@Replace this persistent entity with a simple POJO or DTO object.(·ß·¶ùÿÿÿÿH.RCRITICALZVULNERABILITY
+x
+java:S46849"@Replace this persistent entity with a simple POJO or DTO object.(©ì³8êœ³Œê.H<RCRITICALZVULNERABILITY
+[
+java:S3655("7Call "Optional#isPresent()" before accessing the value.(™“ÑH,RMAJORZBUG

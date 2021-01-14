@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import hack.api.com.modelo.Animal;
 
 
+@Transactional
 @Repository
 public interface AnimalRepositorio extends JpaRepository<Animal,Long>{
 
