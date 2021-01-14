@@ -40,7 +40,7 @@ public class DonoController {
 	
 	@PostMapping
 	public ResponseEntity<String> save(@RequestBody DonoDTO dto){
-		service.saveWithAnimals(dto);
+		service.save(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body("ok");	
 	}
 	

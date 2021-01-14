@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.support.Repositories;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +34,7 @@ public class DonoService  {
 	public List<DonoDTO> findAll(){
 	List<DonoDTO> lista = new ArrayList<>();
 	    for (Dono dono : repo.findAll()) {
-		 lista.add(map.map(dono, DonoDTO.class));		
+		 lista.add(new DonoDTO(dono));		
 		}
 	 return lista ;				
 	}	
@@ -42,41 +43,27 @@ public class DonoService  {
 	public DonoDTO findById(Long id) {
 	return map.map(repo.findById(id).get(), DonoDTO.class);	
 	}
-	
-	
+		
 	public DonoDTO save(DonoDTO dono){
 	  return map.map(repo.save(map.map(dono, Dono.class)) ,DonoDTO.class);
 	}
 
 	public DonoDTO edit(DonoDTO dto) {
-		 DonoDTO retorno = new DonoDTO();
-			
-		    if (repo.findById(dto.getId()).isPresent()){
-		     return	retorno = map.map(repo.save(map.map(dto, Dono.class)) , DonoDTO.class);			
-			}
-			 return null ;
+		 			
+	    if (repo.findById(dto.getId()).isPresent()){
+	     return	 map.map(repo.save(map.map(dto, Dono.class)) , DonoDTO.class);			
+		}
+		 return null ;
 		} 
 
-	public void saveWithAnimals(DonoDTO dto){
+	public DonoDTO saveWithAnimals(DonoDTO dto){
+		Dono dono = new Dono(null, dto.getNome(), dto.getCPF(),dto.getIdade() );
 		
-		List<Animal> listaAnimais = new ArrayList<>();
-		
-		if(!dto.getAnimais().isEmpty()) {
-			
-			dto.getAnimais().forEach(animal ->{
-				
-				if(this.repo.findById(animal).isPresent()) {
-					listaAnimais.add(this.repoAnimal.findById(animal).get());
-				}
-			});			
+		for(AnimalDTO d : dto.getAnimais()) {
+			Animal a = repoAnimal.getOne(d.getId());
+			dono.getAnimais().add(a);
 		}
-		Dono dono = new Dono();
-		dono.setCPF(dto.getCPF());
-		dono.setIdade(dto.getIdade());
-		dono.setNome(dto.getNome());
-		dono.setAnimais(listaAnimais);
-		
-		this.repo.save(dono);		
+		return new DonoDTO(repo.save(dono));
 		
 	}
 }

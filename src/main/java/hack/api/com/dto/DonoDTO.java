@@ -31,7 +31,25 @@ public class DonoDTO implements Serializable {
 	private String nome;
 	private String CPF;
 	private Integer idade ;
-	private List<Long> animais ;    
+	private List<AnimalDTO> animais ;
+	
+	
+	public DonoDTO(Long id , String nome , String CPF ,Integer idade) {
+		this.id = id;
+		this.nome = nome;
+		this.CPF = CPF;
+		this.idade = idade;
+	}
+	
+	public DonoDTO(Dono dono) {
+	 id = dono.getId();
+	 nome = dono.getNome();
+	 CPF = dono.getCPF();
+	 idade = dono.getIdade();
+	 animais = dono.getAnimais()
+	 .stream().map(x -> new AnimalDTO(x)).collect(Collectors.toList());	 
+			 
+	}
 	 
 
 	

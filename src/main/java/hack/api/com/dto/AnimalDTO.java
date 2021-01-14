@@ -26,4 +26,11 @@ private static final long serialVersionUID = 1L;
 	private String raca;
 	private int peso;
 	
+	public AnimalDTO(Animal a) {
+		id = a.getId();
+		nome = a.getNome();
+		raca = a.getRaca() ;
+		peso = a.getPeso();
+	}
+	
 }
