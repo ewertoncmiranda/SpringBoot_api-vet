@@ -1,6 +1,6 @@
 package hack.api.com.controller;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import hack.api.com.dto.AnimalDTO;
+
 import hack.api.com.dto.DonoDTO;
 import hack.api.com.servico.DonoService;
 
@@ -33,14 +33,12 @@ public class DonoController {
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<DonoDTO> findById(@PathVariable Long id){
-	return ResponseEntity.ok(service.findById(id));
-	}
-	
+		return ResponseEntity.ok(service.findById(id));
+	}	
 	
 	@PostMapping
-	public ResponseEntity<String> save(@RequestBody DonoDTO dto){
-		service.save(dto);
-		return ResponseEntity.status(HttpStatus.CREATED).body("ok");	
+	public ResponseEntity<DonoDTO> save(@RequestBody DonoDTO dto){
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));	
 	}
 	
 	@PutMapping

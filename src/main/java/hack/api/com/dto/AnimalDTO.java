@@ -1,6 +1,9 @@
 package hack.api.com.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import hack.api.com.modelo.Animal;
 import hack.api.com.modelo.Dono;
@@ -25,12 +28,16 @@ private static final long serialVersionUID = 1L;
 	private String nome;
 	private String raca;
 	private int peso;
+	private List<VacinaDTO> vacinas = new ArrayList<>();
+	
 	
 	public AnimalDTO(Animal a) {
 		id = a.getId();
 		nome = a.getNome();
 		raca = a.getRaca() ;
 		peso = a.getPeso();
+		vacinas = a.getVacinas().stream()
+				.map(x -> new VacinaDTO(x)).collect(Collectors.toList());
 	}
 	
 }

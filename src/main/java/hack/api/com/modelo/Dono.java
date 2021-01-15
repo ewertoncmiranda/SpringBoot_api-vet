@@ -47,7 +47,7 @@ public class Dono implements Serializable{
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "animal_id")
-	private List<Animal> animais ;
+	private List<Animal> animais = new ArrayList<>();
 	
 	
 	public Dono(Long id , String nome , String CPF ,Integer idade){

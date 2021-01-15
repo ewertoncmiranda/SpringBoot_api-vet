@@ -29,13 +29,11 @@ public class AnimalService {
 	    }
 		return lista ;
 	}
- 	
-	
+ 		
 	
 	public AnimalDTO save(AnimalDTO dto){
 	return map.map(repo.save(map.map(dto, Animal.class)) , AnimalDTO.class);	
 	} ;
-
 
 	public AnimalDTO edit(AnimalDTO dto) {
 	 AnimalDTO retorno = new AnimalDTO();
@@ -45,5 +43,8 @@ public class AnimalService {
 		}
 		 return null ;
 	} 
+	
+	
+	
 	
 }
