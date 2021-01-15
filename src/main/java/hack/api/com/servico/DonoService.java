@@ -47,7 +47,7 @@ public class DonoService  {
 	public DonoDTO save(DonoDTO dono){
 	  return map.map(repo.save(map.map(dono, Dono.class)) ,DonoDTO.class);
 	}
-
+	
 	public DonoDTO edit(DonoDTO dto) {
 		 			
 	    if (repo.findById(dto.getId()).isPresent()){
@@ -65,5 +65,13 @@ public class DonoService  {
 		}
 		return new DonoDTO(repo.save(dono));
 		
+	}
+
+	public DonoDTO addAnimal(Long idDono , Long idAnimal) {
+	
+		Dono donoref = repo.getOne(idDono) ;
+				
+		donoref.getAnimais().add(repoAnimal.getOne(idAnimal));
+		return new DonoDTO(repo.save(donoref));		
 	}
 }

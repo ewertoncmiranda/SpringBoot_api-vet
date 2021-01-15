@@ -35,7 +35,6 @@ public class DonoController {
 	public ResponseEntity<DonoDTO> findById(@PathVariable Long id){
 	return ResponseEntity.ok(service.findById(id));
 	}
-
 	
 	
 	@PostMapping
@@ -49,6 +48,9 @@ public class DonoController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(service.edit(dono));
 	}
 	
-
+	@PutMapping (value = "/{idDono}/add/{idAnimal}")
+	public ResponseEntity<DonoDTO> addAnimal(@PathVariable Long idDono, @PathVariable Long idAnimal){
+	    return ResponseEntity.status(HttpStatus.OK).body(service.addAnimal(idDono, idAnimal));	
+	}
 
 }

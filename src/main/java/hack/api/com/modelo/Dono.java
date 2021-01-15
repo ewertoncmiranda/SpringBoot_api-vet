@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -34,8 +35,7 @@ public class Dono implements Serializable{
 	
 	@Id
 	@JsonInclude(Include.NON_NULL)
-	@GeneratedValue(generator = "increment")
-	@GenericGenerator(name="increment" ,strategy = "increment")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private Long id;
 	

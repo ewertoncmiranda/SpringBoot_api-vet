@@ -31,7 +31,7 @@ private static final long serialVersionUID = 1L;
 	
 	@Id
 	@JsonInclude(Include.NON_NULL)
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id ;
 		
