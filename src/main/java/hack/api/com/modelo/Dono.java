@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,8 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.GenericGenerator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -49,7 +46,7 @@ public class Dono implements Serializable{
 	@JoinColumn(name = "animal_id")
 	private List<Animal> animais = new ArrayList<>();
 	
-	
+	public Dono() {};
 	public Dono(Long id , String nome , String CPF ,Integer idade){
 		this.id = id;
 		this.nome = nome ;
