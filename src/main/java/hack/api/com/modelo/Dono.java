@@ -21,9 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode
+
 @Entity
 @Table(name = "dono_tbl")
 public class Dono implements Serializable{

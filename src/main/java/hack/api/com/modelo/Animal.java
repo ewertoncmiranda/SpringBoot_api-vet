@@ -23,11 +23,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode
+
 @Entity
 @Table(name = "animal_tbl")
 public class Animal implements Serializable {

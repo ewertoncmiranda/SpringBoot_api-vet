@@ -17,12 +17,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@Data
+
 @Entity
 @Table(name = "vacina_tbl")
-@EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
 public class Vacina implements Serializable {
 
 	public Vacina() {
