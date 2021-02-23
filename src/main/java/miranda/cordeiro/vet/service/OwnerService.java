@@ -8,15 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import miranda.cordeiro.vet.constant.ErrorMessage;
+import miranda.cordeiro.vet.constant.ErrorMessageDono;
 import miranda.cordeiro.vet.dto.OwnerDTO;
 import miranda.cordeiro.vet.entity.Owner;
 import miranda.cordeiro.vet.exception.OwnerException;
 import miranda.cordeiro.vet.repository.OwnerRepository;
+import miranda.cordeiro.vet.util.response.implementation.CrudServiceImp;
 
 
 @Service
-public class OwnerService {
+public class OwnerService implements CrudServiceImp<OwnerDTO> {
 
 	OwnerRepository ownerRepository ;
 	ModelMapper mapper ;
@@ -27,92 +28,83 @@ public class OwnerService {
 		mapper = new ModelMapper();
 	}	
 	
-	
-	public List<OwnerDTO> findAllOwners() {	
+
+	@Override
+	public List<OwnerDTO> findAll() {
+
 		try {
 			List<OwnerDTO> ownerDtoList = new ArrayList<>();
-			
-			for(Owner owner : this.ownerRepository.findAll()) {
-				ownerDtoList.add(mapper.map(owner, OwnerDTO.class));				
-			}			
+
+			for (Owner owner : this.ownerRepository.findAll()) {
+				ownerDtoList.add(mapper.map(owner, OwnerDTO.class));
+			}
 			return ownerDtoList;
-					
+
 		} catch (Exception e) {
-			throw new OwnerException(ErrorMessage.ERROR_FIND_OWNER.getValue(), HttpStatus.BAD_REQUEST);
-		}	
-		
-	}
-	
-	
-	public OwnerDTO findById(Long id) {
-		try {
-			return mapper.map(this.ownerRepository.findById(id).get() , OwnerDTO.class);
-			
-		} catch (Exception e) {
-			throw new OwnerException(ErrorMessage.ERROR_FIND_OWNER.getValue(), HttpStatus.BAD_REQUEST); 
+			throw new OwnerException(ErrorMessageDono.ERROR_FIND_OWNER.getValue(), HttpStatus.BAD_REQUEST);
 		}
+
 	}
-	
-	public Boolean saveNewOwner(OwnerDTO newOwner) {
-	
+
+	@Override
+	public OwnerDTO searchById(Long id) {
+
 		try {
-			this.ownerRepository.save(mapper.map(newOwner, Owner.class));
+			return mapper.map(this.ownerRepository.findById(id).get(), OwnerDTO.class);
+
+		} catch (Exception e) {
+			throw new OwnerException(ErrorMessageDono.ERROR_FIND_OWNER.getValue(), HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@Override
+	public Boolean saveNew(OwnerDTO entity) {
+
+		try {
+			this.ownerRepository.save(mapper.map(entity, Owner.class));
 			return Boolean.TRUE;
 		} catch (Exception e) {
-			throw new OwnerException(ErrorMessage.ERROR_SAVE_NEW_OWNER.getValue(), HttpStatus.BAD_REQUEST);
-		}		
-	}	
+			throw new OwnerException(ErrorMessageDono.ERROR_SAVE_NEW_OWNER.getValue(), HttpStatus.BAD_REQUEST);
 
-	public OwnerDTO updateOnwer(OwnerDTO owner) {
+		}
+
+	}
+
+	@Override
+	public OwnerDTO updateAn(OwnerDTO entity) {
+
 		try {
-			
-			if(this.ownerRepository.findById(owner.getId()).isPresent()) {
-				return mapper.map(this.ownerRepository.save(mapper.map(owner, Owner.class)), OwnerDTO.class);
-			}else {
-				throw new OwnerException(ErrorMessage.ERROR_UPDATE_OWNER_BY_ID.getValue(), HttpStatus.BAD_REQUEST);
+
+			if (this.ownerRepository.findById(entity.getId()).isPresent()) {
+				return mapper.map(this.ownerRepository.save(mapper.map(entity, Owner.class)), OwnerDTO.class);
+			} else {
+				throw new OwnerException(ErrorMessageDono.ERROR_UPDATE_OWNER_BY_ID.getValue(), HttpStatus.BAD_REQUEST);
 			}
-			
+
 		} catch (Exception e) {
-			throw new OwnerException(ErrorMessage.ERROR_UPDATE_OWNER_BY_ID.getValue(), HttpStatus.BAD_REQUEST);
+			throw new OwnerException(ErrorMessageDono.ERROR_UPDATE_OWNER_BY_ID.getValue(), HttpStatus.BAD_REQUEST);
+
 		}
 	}
-	
-	
-	public Boolean deleteOwner(Long id) {
+
+	@Override
+	public Boolean deleteAn(Long id) {
+
 		try {
 
 			if (this.ownerRepository.findById(id).isPresent()) {
 				this.ownerRepository.delete(this.ownerRepository.findById(id).get());
 				return Boolean.TRUE;
 			} else {
-				throw new OwnerException(ErrorMessage.ERROR_UPDATE_OWNER_BY_ID.getValue(), HttpStatus.BAD_REQUEST);
+				throw new OwnerException(ErrorMessageDono.ERRO_DELETE_OWNER.getValue(), HttpStatus.BAD_REQUEST);
 			}
 
 		} catch (Exception e) {
-			throw new OwnerException(ErrorMessage.ERROR_UPDATE_OWNER_BY_ID.getValue(), HttpStatus.BAD_REQUEST);
+			throw new OwnerException(ErrorMessageDono.ERRO_DELETE_OWNER.getValue(), HttpStatus.BAD_REQUEST);
 		}
-		
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

@@ -14,73 +14,70 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import miranda.cordeiro.vet.dto.OwnerDTO;
-import miranda.cordeiro.vet.entity.Owner;
-import miranda.cordeiro.vet.service.OwnerService;
+import miranda.cordeiro.vet.constant.AnimalType;
+import miranda.cordeiro.vet.dto.AnimalDTO;
+import miranda.cordeiro.vet.entity.Animal;
+import miranda.cordeiro.vet.service.AnimalService;
 import miranda.cordeiro.vet.util.response.GeneralResponse;
 import miranda.cordeiro.vet.util.response.implementation.CrudBasicControllerImp;
 
 @RestController
-@RequestMapping("/owner")
-public class OwnerController implements CrudBasicControllerImp<ResponseEntity , OwnerDTO> {
-	
+@RequestMapping("/animal")
+public class AnimalController implements CrudBasicControllerImp<ResponseEntity,AnimalDTO>{
+
 	@Autowired
-	OwnerService ownerService ;
-		
+	AnimalService animalService ;
 	
 	@GetMapping("/random")
-	public ResponseEntity<Owner> generateNewOwner(){	
-		Owner owner = new Owner();
-		owner.setId(10l);
-		owner.setName("Sant zu");
-		owner.setTelephone("456789");
-		return ResponseEntity.ok().body(owner);		
+	public Animal generateNewAnimal(){
+		Animal animal = new Animal();
+		animal.setId(85l);
+		animal.setName("Super Cao Dog Nê");
+		animal.setSize(AnimalType.LITTLE_SIZE);
+		return animal ;
 	}
 	
-
 	@Override
 	@GetMapping
-	public ResponseEntity<GeneralResponse<List<OwnerDTO>>> getListOf() {		
-		GeneralResponse<List<OwnerDTO>> response = new GeneralResponse<>();
-		response.setData(ownerService.findAll());	
+	public ResponseEntity<GeneralResponse<List<AnimalDTO>>> getListOf() {
+		GeneralResponse<List<AnimalDTO>> response = new GeneralResponse<>();
+		response.setData(animalService.findAll());
 		response.setHttpStatusCode(HttpStatus.OK.value());
-		return ResponseEntity.status(HttpStatus.OK.value()).body(response);		
+		return ResponseEntity.status(response.getHttpStatusCode()).body(response);
 	}
 
 	@Override
 	@GetMapping("/{id}")
-	public ResponseEntity<GeneralResponse<OwnerDTO>> findById(@PathVariable Long id) {
-		GeneralResponse<OwnerDTO> response = new GeneralResponse<>();
-		response.setData(ownerService.searchById(id));
+	public ResponseEntity<GeneralResponse<AnimalDTO>> findById(@PathVariable Long id) {
+		GeneralResponse<AnimalDTO> response = new GeneralResponse<>();
+		response.setData(animalService.searchById(id));
 		response.setHttpStatusCode(HttpStatus.OK.value());
 		return ResponseEntity.status(response.getHttpStatusCode()).body(response);
 	}
 
 	@Override
 	@PostMapping
-	public ResponseEntity<GeneralResponse<Boolean>> saveNew(@RequestBody OwnerDTO entity) {
+	public ResponseEntity<GeneralResponse<Boolean>> saveNew(@RequestBody AnimalDTO entity) {
 		GeneralResponse<Boolean> response = new GeneralResponse<>();
-		response.setData(this.ownerService.saveNew(entity));
-		response.setHttpStatusCode(HttpStatus.CREATED.value());
-		return ResponseEntity.status(response.getHttpStatusCode()).body(response);
-	}
-
-	@Override
-	@PutMapping
-	public ResponseEntity<GeneralResponse<OwnerDTO>> updateAn(@RequestBody OwnerDTO entity) {
-
-		GeneralResponse<OwnerDTO> response = new GeneralResponse<>();
-		response.setData(this.ownerService.updateAn(entity));
+		response.setData(animalService.saveNew(entity));
 		response.setHttpStatusCode(HttpStatus.OK.value());
 		return ResponseEntity.status(response.getHttpStatusCode()).body(response);
 	}
 
 	@Override
-	@DeleteMapping("/{id}")
-	public ResponseEntity<GeneralResponse<Boolean>> deleteAn(@PathVariable Long id) {
+	@PutMapping
+	public ResponseEntity<GeneralResponse<AnimalDTO>> updateAn(@RequestBody AnimalDTO entity) {
+		GeneralResponse<AnimalDTO> response = new GeneralResponse<>();
+		response.setData(animalService.updateAn(entity));
+		response.setHttpStatusCode(HttpStatus.OK.value());
+		return ResponseEntity.status(response.getHttpStatusCode()).body(response);
+	}
 
+	@Override
+	@DeleteMapping
+	public ResponseEntity<GeneralResponse<Boolean>> deleteAn(@PathVariable Long id) {
 		GeneralResponse<Boolean> response = new GeneralResponse<>();
-		response.setData(this.ownerService.deleteAn(id));
+		response.setData(animalService.deleteAn(id));
 		response.setHttpStatusCode(HttpStatus.OK.value());
 		return ResponseEntity.status(response.getHttpStatusCode()).body(response);
 	}
