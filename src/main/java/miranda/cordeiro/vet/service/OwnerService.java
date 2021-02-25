@@ -8,23 +8,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import miranda.cordeiro.vet.constant.ErrorMessageDono;
+import miranda.cordeiro.vet.constant.ErrorMessageOwner;
 import miranda.cordeiro.vet.dto.OwnerDTO;
+import miranda.cordeiro.vet.entity.Animal;
 import miranda.cordeiro.vet.entity.Owner;
 import miranda.cordeiro.vet.exception.OwnerException;
+import miranda.cordeiro.vet.repository.AnimalRepository;
 import miranda.cordeiro.vet.repository.OwnerRepository;
-import miranda.cordeiro.vet.util.response.implementation.CrudServiceImp;
+import miranda.cordeiro.vet.util.mplementation.CrudServiceImp;
 
 
 @Service
 public class OwnerService implements CrudServiceImp<OwnerDTO> {
 
 	OwnerRepository ownerRepository ;
+	AnimalRepository animalRepository ;
 	ModelMapper mapper ;
 	
 	@Autowired 
-	public OwnerService(OwnerRepository repository) {
-		this.ownerRepository = repository;
+	public OwnerService(OwnerRepository ownerRepositoryParam ,AnimalRepository animalRepositoryParam) {
+		this.ownerRepository = ownerRepositoryParam;
+		this.animalRepository = animalRepositoryParam;
 		mapper = new ModelMapper();
 	}	
 	
@@ -41,7 +45,7 @@ public class OwnerService implements CrudServiceImp<OwnerDTO> {
 			return ownerDtoList;
 
 		} catch (Exception e) {
-			throw new OwnerException(ErrorMessageDono.ERROR_FIND_OWNER.getValue(), HttpStatus.BAD_REQUEST);
+			throw new OwnerException(ErrorMessageOwner.ERROR_FIND_OWNER.getValue(), HttpStatus.BAD_REQUEST);
 		}
 
 	}
@@ -53,7 +57,7 @@ public class OwnerService implements CrudServiceImp<OwnerDTO> {
 			return mapper.map(this.ownerRepository.findById(id).get(), OwnerDTO.class);
 
 		} catch (Exception e) {
-			throw new OwnerException(ErrorMessageDono.ERROR_FIND_OWNER.getValue(), HttpStatus.BAD_REQUEST);
+			throw new OwnerException(ErrorMessageOwner.ERROR_FIND_OWNER.getValue(), HttpStatus.BAD_REQUEST);
 		}
 
 	}
@@ -65,7 +69,7 @@ public class OwnerService implements CrudServiceImp<OwnerDTO> {
 			this.ownerRepository.save(mapper.map(entity, Owner.class));
 			return Boolean.TRUE;
 		} catch (Exception e) {
-			throw new OwnerException(ErrorMessageDono.ERROR_SAVE_NEW_OWNER.getValue(), HttpStatus.BAD_REQUEST);
+			throw new OwnerException(ErrorMessageOwner.ERROR_SAVE_NEW_OWNER.getValue(), HttpStatus.BAD_REQUEST);
 
 		}
 
@@ -79,11 +83,11 @@ public class OwnerService implements CrudServiceImp<OwnerDTO> {
 			if (this.ownerRepository.findById(entity.getId()).isPresent()) {
 				return mapper.map(this.ownerRepository.save(mapper.map(entity, Owner.class)), OwnerDTO.class);
 			} else {
-				throw new OwnerException(ErrorMessageDono.ERROR_UPDATE_OWNER_BY_ID.getValue(), HttpStatus.BAD_REQUEST);
+				throw new OwnerException(ErrorMessageOwner.ERROR_UPDATE_OWNER_BY_ID.getValue(), HttpStatus.BAD_REQUEST);
 			}
 
 		} catch (Exception e) {
-			throw new OwnerException(ErrorMessageDono.ERROR_UPDATE_OWNER_BY_ID.getValue(), HttpStatus.BAD_REQUEST);
+			throw new OwnerException(ErrorMessageOwner.ERROR_UPDATE_OWNER_BY_ID.getValue(), HttpStatus.BAD_REQUEST);
 
 		}
 	}
@@ -97,16 +101,24 @@ public class OwnerService implements CrudServiceImp<OwnerDTO> {
 				this.ownerRepository.delete(this.ownerRepository.findById(id).get());
 				return Boolean.TRUE;
 			} else {
-				throw new OwnerException(ErrorMessageDono.ERRO_DELETE_OWNER.getValue(), HttpStatus.BAD_REQUEST);
+				throw new OwnerException(ErrorMessageOwner.ERRO_DELETE_OWNER.getValue(), HttpStatus.BAD_REQUEST);
 			}
 
 		} catch (Exception e) {
-			throw new OwnerException(ErrorMessageDono.ERRO_DELETE_OWNER.getValue(), HttpStatus.BAD_REQUEST);
+			throw new OwnerException(ErrorMessageOwner.ERRO_DELETE_OWNER.getValue(), HttpStatus.BAD_REQUEST);
 		}
 
 	}
 	
-	
-	
+	public OwnerDTO addAnimalToDono(Long idOwner , Long idAnimal) {
+				
+		
+		Owner ownerHelper = this.ownerRepository.getOne(idOwner);		
+		Animal animalHelper = this.animalRepository.getOne(idAnimal);		
+		ownerHelper.getAnimalList().add(animalHelper);		
+		return mapper.map(this.ownerRepository.save(ownerHelper) ,OwnerDTO.class);
+		
+	}
+		
 	
 }

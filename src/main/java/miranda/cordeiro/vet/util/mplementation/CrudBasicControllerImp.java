@@ -1,4 +1,4 @@
-package miranda.cordeiro.vet.util.response.implementation;
+package miranda.cordeiro.vet.util.mplementation;
 
 public interface CrudBasicControllerImp<T,K> {
 

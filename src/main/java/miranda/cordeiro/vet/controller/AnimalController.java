@@ -18,8 +18,8 @@ import miranda.cordeiro.vet.constant.AnimalType;
 import miranda.cordeiro.vet.dto.AnimalDTO;
 import miranda.cordeiro.vet.entity.Animal;
 import miranda.cordeiro.vet.service.AnimalService;
+import miranda.cordeiro.vet.util.mplementation.CrudBasicControllerImp;
 import miranda.cordeiro.vet.util.response.GeneralResponse;
-import miranda.cordeiro.vet.util.response.implementation.CrudBasicControllerImp;
 
 @RestController
 @RequestMapping("/animal")
@@ -60,7 +60,7 @@ public class AnimalController implements CrudBasicControllerImp<ResponseEntity,A
 	public ResponseEntity<GeneralResponse<Boolean>> saveNew(@RequestBody AnimalDTO entity) {
 		GeneralResponse<Boolean> response = new GeneralResponse<>();
 		response.setData(animalService.saveNew(entity));
-		response.setHttpStatusCode(HttpStatus.OK.value());
+		response.setHttpStatusCode(HttpStatus.CREATED.value());
 		return ResponseEntity.status(response.getHttpStatusCode()).body(response);
 	}
 
@@ -82,4 +82,12 @@ public class AnimalController implements CrudBasicControllerImp<ResponseEntity,A
 		return ResponseEntity.status(response.getHttpStatusCode()).body(response);
 	}
 
+	@PutMapping("/{idAnimal}/add/{idVacina}")
+	public ResponseEntity<GeneralResponse<AnimalDTO>> addVacinaToAnimal(@PathVariable Long idAnimal, @PathVariable Long idVacina){
+		GeneralResponse<AnimalDTO> response = new GeneralResponse<>();
+		response.setData(this.animalService.addVacinaToAnimal(idAnimal, idVacina));
+		response.setHttpStatusCode(HttpStatus.OK.value());
+		return ResponseEntity.status(response.getHttpStatusCode()).body(response);		
+	}
+	
 }

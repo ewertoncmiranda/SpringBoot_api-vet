@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import miranda.cordeiro.vet.dto.OwnerDTO;
 import miranda.cordeiro.vet.entity.Owner;
 import miranda.cordeiro.vet.service.OwnerService;
+import miranda.cordeiro.vet.util.mplementation.CrudBasicControllerImp;
 import miranda.cordeiro.vet.util.response.GeneralResponse;
-import miranda.cordeiro.vet.util.response.implementation.CrudBasicControllerImp;
 
 @RestController
 @RequestMapping("/owner")
@@ -85,4 +85,11 @@ public class OwnerController implements CrudBasicControllerImp<ResponseEntity , 
 		return ResponseEntity.status(response.getHttpStatusCode()).body(response);
 	}
 
+	@PutMapping(value = "/{idOwner}/add/{idAnimal}")
+	public ResponseEntity<GeneralResponse<OwnerDTO>> addAnimalToDono(@PathVariable Long idOwner , @PathVariable Long idAnimal){
+		GeneralResponse<OwnerDTO> response = new GeneralResponse<>();
+		response.setData(this.ownerService.addAnimalToDono(idOwner, idAnimal));
+		response.setHttpStatusCode(HttpStatus.OK.value());
+		return ResponseEntity.status(response.getHttpStatusCode()).body(response);		
+	}
 }

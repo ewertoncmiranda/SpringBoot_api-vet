@@ -13,18 +13,21 @@ import miranda.cordeiro.vet.dto.AnimalDTO;
 import miranda.cordeiro.vet.entity.Animal;
 import miranda.cordeiro.vet.exception.AnimalException;
 import miranda.cordeiro.vet.repository.AnimalRepository;
-import miranda.cordeiro.vet.util.response.implementation.CrudServiceImp;
+import miranda.cordeiro.vet.repository.VacinaRepository;
+import miranda.cordeiro.vet.util.mplementation.CrudServiceImp;
 
 @Service
 public class AnimalService implements CrudServiceImp<AnimalDTO> {
 	
 	
 	AnimalRepository animalRepository;
+	VacinaRepository vacinaRepository ;
 	ModelMapper mapper ;
 	
 	@Autowired
-	public AnimalService (AnimalRepository repository) {
-		this.animalRepository = repository;
+	public AnimalService (AnimalRepository animalRepositoryParam , VacinaRepository vacinaRepositoryParam) {
+		this.animalRepository = animalRepositoryParam;
+		this.vacinaRepository = vacinaRepositoryParam;
 		mapper = new ModelMapper();
 	}
 
@@ -90,9 +93,24 @@ public class AnimalService implements CrudServiceImp<AnimalDTO> {
 		}
 	}
 	
-	
-	
-	
+	public AnimalDTO addVacinaToAnimal(Long idAnimal , Long idVacina) {
+		try {			
+			if(this.animalRepository.findById(idAnimal).isPresent()) {
+				Animal animalHelper = this.animalRepository.getOne(idAnimal);				
+					if(this.vacinaRepository.findById(idVacina).isPresent()) {
+						 animalHelper.getVacinaList().add(this.vacinaRepository.findById(idVacina).get()) ;
+						 
+						return new AnimalDTO(this.animalRepository.save(animalHelper));						
+					}else {
+						throw new AnimalException(ErrorMessageAnimal.ERRO_ADD_VACINA_TO_ANIMAL.getValue(),HttpStatus.NOT_FOUND);
+					}				
+			}else {
+				throw new AnimalException(ErrorMessageAnimal.ERRO_ADD_VACINA_TO_ANIMAL.getValue(),HttpStatus.NOT_FOUND);
+			}						
+		} catch (Exception e) {
+			throw new AnimalException(ErrorMessageAnimal.ERRO_ADD_VACINA_TO_ANIMAL.getValue(),HttpStatus.BAD_REQUEST);
+		}
+	}
 	
 	
 }
