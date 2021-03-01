@@ -1,0 +1,9 @@
+languagem: java
+jdk: "-openjdk8"
+deploy:
+  provider: heroku
+  api_key:
+    secure: MtPtatmh3QMzoDtCgWujxbooeyN0qIVcFsenuJHgZTmJesX84cIyUrSEMbUguX05a0YjJLbXtBu2qoPacQO7gzZsXTy2S1+vTtE+PkkGnnBbn6zwVXYPVreVTr/FfZvTfdVdxzP7hS+fDfy9rAEu//G18fHOzmpTAp+O4RRF4DCwIdrkKsTH9RDw2lUMcOaZv61yTqDh8jUWQhz5cT8b6PGne4bjRU7HRnR2dAGEwjHpIk8zLfyVjLbG/MDqgt3iL3KhbpL/8VsgHAEp4NdNy0phi1H54nzkGrkDn4pfDIz7xmC4gS7Y2kC2R1NPcrKkHc8yV8ClBy3kmOmHEBUwQlJRnBPV7/ZYRcJwB+KMb/EopiepUz1sXzb76ExFjupAMT5R/KlkXgB6N8yr2AMPRJrLcOVOirsifykSEH2kDV5plzhADPA1Ppn/xKSdyxwOMyMEPQvPXeZ4sesBdZbA8/8xFBi6hyy5k7Di+dKbkDGPv3PQCzfQ8fRm36tJo/yI4M1ojZWONUXuEXP9wxhfea1A8fvWtTEUhDA0rLB7VPMFivCyTt4zsqK88iJtpzSuxcPJyIcnZ+kWMhahhMkQ025jRAEONgRqx6V4u4+rGeNpzgUaJcaZBV8rJf5lMHKPVdvBbxwaiUJtFx218V2saFlZf7qtHHY/i6f7jWXvUUk=
+  app: vet-manager-dev
+  on:    
+    branch: master
