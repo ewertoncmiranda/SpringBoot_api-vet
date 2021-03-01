@@ -14,7 +14,7 @@ public enum AnimalType {
 	
 	public String getValue() {
 		return value ;
-	}
+	}  /**/
 	
 	
 }
