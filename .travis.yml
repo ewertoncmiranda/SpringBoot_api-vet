@@ -3,10 +3,8 @@ jdk: "-openjdk8"
 deploy:
   provider: heroku
   api_key:
-    secure: 5087a8a7-9a1f-417d-b0ec-40dc2a369fdb
-  app: 'Message: Invalid credentials provided.'
+    secure: XN5m2tu+vV3vm9GCcH1kDpgzOEDMbBk7RBS3EPy2NbjKGTO+gFiJ55hUEWo1W2e1eC6Xln5iu7q87WARhKRrB2TBMlPIhnwGl0lERB7JOR82AcZxYRFqPGHmYPUDcqy5Yn31ySnsEwJYu8mB3O5C778TGY13DvZo+L275G+3FKq39jTACV+WCPu1cLXpm8EMACJyFoYFFAm3Hd+Pt2vcpGW/JLP9x6TvFSlRCo3o9pLCpoOuth0dGZW5GEWdPur7UBCm0yUWEQ+smgMHtzWfQnrqgBVl2WM5iPgV6vjpLE0SYpAoO1NqMqZ3kjelc1o6t8IG2NEMmPanOwMqjdNPdyhhBbNH5cMv4SGBh0LgcyU1YfzHCg98rhgANK+jI0zNPD645z4AbqgshCVnqnpTZPEnGPGVV/XCD2/jZ+vVn45egI4mmdyVK9qOC2McQSwB/YWCoZ8MGtKAGDoPFn+GCKd8VJuhbwk10T7KQpGYLyf6fG9n9ueMi/rd421wZ2dhxrxt3WSNu+w8e9RDLJO8RPVCXPOl8zv8jV0dzNc6Kvf6UM6fQGQKUc1S6zBBEDF7fUkgiCpJoC0I4rJsjVuU8leM9smUWM4+upySAffQmegrpwlpmDKe1hijfOe59EtVkgzZpaM+zhRjxRkktF+F5mwdypJR72XH+nBmyDrpO3w=
+  app: vet-manager-dev
   on:
     repo: ewertoncmiranda/SpringBoot_api-vet
   skip_cleanup: 'true'
-
-
