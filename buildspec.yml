@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      # Instala o Java 11
+      amazon-linux-extras install -y java-openjdk11
+
+  pre_build:
+    commands:
+      # Baixa as dependências do Maven
+      mvn dependency:resolve
+
+  build:
+    commands:
+      # Compila o projeto e empacota em um arquivo .jar
+      mvn package -DskipTests
+artifacts:
+  files:
+    - target/my-spring-app.jar
+  discard-paths: yes
