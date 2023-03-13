@@ -1,0 +1,28 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      # Instala o Java 11
+      amazon-linux-extras install -y java-openjdk11
+
+  pre_build:
+    commands:
+      # Baixa as dependências do Maven
+      mvn dependency:resolve
+
+  build:
+    commands:
+      # Compila o projeto e empacota em um arquivo .jar
+      mvn package -DskipTests
+
+  post_build:
+    commands:
+      # Configura o aplicativo no diretório de implantação do CodeDeploy
+      mkdir -p /opt/codedeploy-agent/deployment-root/${DEPLOYMENT_GROUP_ID}/${DEPLOYMENT_ID}/deployment-archive/
+      mv target/*.jar /opt/codedeploy-agent/deployment-root/${DEPLOYMENT_GROUP_ID}/${DEPLOYMENT_ID}/deployment-archive/app.jar
+      # Reinicia o serviço do aplicativo
+      systemctl stop my-application.service
+      systemctl start my-application.service
+      # Verifica o status do serviço
+      systemctl status my-application.service
