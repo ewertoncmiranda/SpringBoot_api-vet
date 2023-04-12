@@ -11,3 +11,4 @@ Tecnologias abordadas
 - Spring JPA
 - MySQL
 
+- Spring Security + Keycloak
